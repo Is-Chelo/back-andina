@@ -1,32 +1,6 @@
 const express = require('express');
-const { exec } = require('child_process');
 const router = express.Router();
 const {validarToken, validarPermisos} = require('../../middlewares/auth');
-
-router.use('/deploy', (req, res) => {
-	let command = `npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all`;
-	console.log('command: ', command);
-
-	exec(command, (error, stdout, stderr) => {
-		if (error) {
-			console.error(`Error al ejecutar el comando: ${error.message}`);
-			res.json({
-				status: false,
-				message: error,
-			});
-		}
-		if (stderr) {
-			console.error(`Error de salida estándar del comando: ${stderr}`);
-			res.json({
-				status: true,
-				message: 'Run Database',
-			});
-		}
-	});
-	res.json({
-		status: true,
-	});
-});
 
 // * AUTH
 router.use('/auth', require('./auth'));

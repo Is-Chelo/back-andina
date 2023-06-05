@@ -10,7 +10,6 @@ module.exports = {
 	},
 
 	async login(req, res) {
-		console.log('llega ?');
 		const response = await AuthServices.login(req, res);
 		res.status(response.statusCode).json(response);
 	},
