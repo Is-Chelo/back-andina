@@ -1,4 +1,3 @@
-const pdf = require('html-pdf');
 const fs = require('fs');
 const moment = require('moment');
 const {translates} = require('../utils/translates');
