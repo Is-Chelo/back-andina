@@ -20,6 +20,7 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.3",
     "pdfkit-construct": "^1.2.3",
+    "puppeteer": "^20.5.0",
     "sequelize": "^6.19.0",
     "uuid": "^9.0.0"
   },

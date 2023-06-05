@@ -2,6 +2,7 @@ const pdf = require('html-pdf');
 const fs = require('fs');
 const moment = require('moment');
 const {translates} = require('../utils/translates');
+const puppeteer = require('puppeteer');
 
 const crearPdf = async (
 	res,
@@ -12,7 +13,9 @@ const crearPdf = async (
 	promedioStudent = 0
 ) => {
 	let content = header() + `<center><h4>${reporteName}</h4></center>`;
-
+	const now = new Date();
+	let nameFile = reporteName.split(' ').join('-').toLowerCase();
+	nameFile += '-' + moment(now).format('YYYY-MM-DD');
 	if (type === 'kardex')
 		content += headerKardex(
 			stutendData.person_full_name,
@@ -28,33 +31,85 @@ const crearPdf = async (
 
 	content += buildDataTable(data);
 
-	const options = {
+	const browser = await puppeteer.launch({headless: 'new'});
+	const page = await browser.newPage();
+
+	await page.setContent(content);
+	await page.pdf({
+		path: `./storage/${nameFile}.pdf`,
 		format: 'Letter',
-		border: {
-			bottom: '2cm',
-			left: '1cm',
-		},
-	};
-	const now = new Date();
-	let nameFile = reporteName.split(' ').join('-').toLowerCase();
-	nameFile += '-' + moment(now).format('YYYY-MM-DD');
-
-	pdf.create(content, options).toFile(`./storage/${nameFile}.pdf`, function (err, result) {
-		if (err) {
-			console.log(err);
-			res.status(500).send('Error al generar el PDF');
-		} else {
-			const filePath = result.filename;
-
-			res.download(filePath, `${nameFile}.pdf`, function (err) {
-				if (err) {
-					console.log(err);
-					res.status(500).send('Error al descargar el PDF');
-				}
-			});
-		}
+		margin: {bottom: '2cm', left: '1cm'},
 	});
+
+	await browser.close();
+
+	// Descargar el archivo PDF
+	const filePath = `./storage/${nameFile}.pdf`; // Ruta al archivo PDF generado
+
+	// Verificar si el archivo existe
+	if (fs.existsSync(filePath)) {
+		res.setHeader('Content-Type', 'application/pdf');
+		res.setHeader('Content-Disposition', 'attachment; filename=nombre-del-archivo.pdf');
+
+		const fileStream = fs.createReadStream(filePath);
+		fileStream.pipe(res);
+	} else {
+		res.status(404).send('Archivo no encontrado');
+	}
 };
+
+// const crearPdf = async (
+// 	res,
+// 	data,
+// 	reporteName = 'Reporte',
+// 	type = 'normal',
+// 	stutendData = {},
+// 	promedioStudent = 0
+// ) => {
+// 	let content = header() + `<center><h4>${reporteName}</h4></center>`;
+
+// 	if (type === 'kardex')
+// 		content += headerKardex(
+// 			stutendData.person_full_name,
+// 			stutendData.person_ci_number,
+// 			promedioStudent
+// 		);
+// 	if (type === 'grades')
+// 		content += headerGrades(
+// 			stutendData.person_full_name,
+// 			stutendData.person_ci,
+// 			`${promedioStudent} - ${stutendData.matricula_name}`
+// 		);
+
+// 	content += buildDataTable(data);
+
+// 	const options = {
+// 		format: 'Letter',
+// 		border: {
+// 			bottom: '2cm',
+// 			left: '1cm',
+// 		},
+// 	};
+// 	const now = new Date();
+// 	let nameFile = reporteName.split(' ').join('-').toLowerCase();
+// 	nameFile += '-' + moment(now).format('YYYY-MM-DD');
+
+// 	pdf.create(content, options).toFile(`./storage/${nameFile}.pdf`, function (err, result) {
+// 		if (err) {
+// 			console.log(err);
+// 			res.status(500).send('Error al generar el PDF');
+// 		} else {
+// 			const filePath = result.filename;
+
+// 			res.download(filePath, `${nameFile}.pdf`, function (err) {
+// 				if (err) {
+// 					console.log(err);
+// 					res.status(500).send('Error al descargar el PDF');
+// 				}
+// 			});
+// 		}
+// 	});
+// };
 
 // TODO: HEADER PARA KARDEX
 const headerKardex = (nameStudent, docIden, record) => {
