@@ -7,7 +7,13 @@ module.exports = {
 	async kardexByStudent(idStudent, idProgram, authUser) {
 		let whereProgram;
 
-		if (idProgram === 'undefined' || idProgram === 'null') whereProgram = {};
+		if (
+			idProgram === 'undefined' ||
+			idProgram === 'null' ||
+			idProgram === undefined ||
+			idProgram === null
+		)
+			whereProgram = {};
 		else
 			whereProgram = {
 				id_program: idProgram,
