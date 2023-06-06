@@ -15,9 +15,6 @@ module.exports = {
 			uuid: {
 				type: Sequelize.STRING,
 			},
-			academics_hours: {
-				type: Sequelize.DECIMAL,
-			},
 			active: {
 				type: Sequelize.BOOLEAN,
 			},

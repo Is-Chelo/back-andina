@@ -15,7 +15,6 @@ module.exports = {
 			arraydata.push({
 				type_rol: 'Docente',
 				uuid: uuidv4(),
-				academics_hours: 25,
 				active: 1,
 				id_people: person.dataValues.id,
 				createdAt: new Date(),
