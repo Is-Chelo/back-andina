@@ -38,13 +38,13 @@ sequelize
 app.get('/', (req, res) => {
 	res.render('index', {title: 'Página de inicio'});
 });
-app.get('*', (req, res) => {
-	res.sendFile(__dirname+'/public/index.html')
-});
+
 
 // TODO: Route for api
 app.use('/api/v1', require('./app/routes/api/index'));
-
+app.get('*', (req, res) => {
+	res.sendFile(__dirname+'/public/index.html')
+});
 app.listen(process.env.PORT, () => {
 	console.log(`Server is running on port http://localhost:${process.env.PORT}`);
 });
