@@ -9,6 +9,7 @@ const {validarToken, validarPermisos} = require('../../middlewares/auth');
 const RoleControllerController = require('../../controllers/api/RoleController');
 
 router.get('/', [validarToken, validarPermisos], RoleControllerController.index);
+router.get('/other', [validarToken, validarPermisos], RoleControllerController.listOnlyOtherRoles);
 router.get('/reporte', [validarToken, validarPermisos], RoleControllerController.reporteAll);
 
 router.post(

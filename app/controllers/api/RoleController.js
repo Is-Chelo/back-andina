@@ -6,6 +6,10 @@ module.exports = {
 		const response = await RoleService.index();
 		res.status(response.statusCode).json(response);
 	},
+	async listOnlyOtherRoles(req, res) {
+		const response = await RoleService.listOnlyOtherRoles();
+		res.status(response.statusCode).json(response);
+	},
 	async show(req, res) {
 		const {id} = req.params;
 		const response = await RoleService.show(id);

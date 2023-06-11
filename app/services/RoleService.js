@@ -52,6 +52,32 @@ module.exports = {
 			return InternalServer('Error en el servidor');
 		}
 	},
+
+	
+	async listOnlyOtherRoles() {
+		try {
+			const response = await role.findAll({
+				where: {
+					id: {
+						[Op.not]: [2, 3, 4],
+					},
+				},
+			});
+			const dataTransform = Object.values(response).map((data, index) => {
+				return roleTransform(data.dataValues, index + 1);
+			});
+			return {
+				statusCode: 200,
+				status: true,
+				message: ['Operacion Exitosa'],
+				data: dataTransform,
+			};
+		} catch (error) {
+			console.log(error);
+			return InternalServer('Error en el servidor');
+		}
+	},
+
 	async reporte() {
 		try {
 			const response = await role.findAll({});
