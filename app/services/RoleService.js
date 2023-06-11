@@ -1,3 +1,4 @@
+const {Op} = require('sequelize');
 const {role, rolmodule, modulo} = require('../models/index');
 const {InternalServer, NotFoundResponse, BadRequest} = require('../utils/response');
 const {roleTransformReport} = require('./utils/reports/role-transform-report');
@@ -53,7 +54,6 @@ module.exports = {
 		}
 	},
 
-	
 	async listOnlyOtherRoles() {
 		try {
 			const response = await role.findAll({
