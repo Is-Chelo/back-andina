@@ -7,6 +7,7 @@ router.use('/auth', require('./auth'));
 
 // * Routes Add With generate
 router.use('/area', require('./Area.route'));
+router.use('/delivery-qualification', require('./DeliveryQualification.route'));
 router.use('/subject', require('./Subject.route'));
 router.use('/program', require('./Program.route'));
 router.use('/student', require('./Student.route'));

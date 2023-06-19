@@ -1,4 +1,4 @@
-const {Op} = require('sequelize');
+const { Op } = require('sequelize');
 const {role, rolmodule, modulo} = require('../models/index');
 const {InternalServer, NotFoundResponse, BadRequest} = require('../utils/response');
 const {roleTransformReport} = require('./utils/reports/role-transform-report');
@@ -38,7 +38,8 @@ module.exports = {
 
 	async index() {
 		try {
-			const response = await role.findAll({});
+			const response = await role.findAll({
+			});
 			const dataTransform = Object.values(response).map((data, index) => {
 				return roleTransform(data.dataValues, index + 1);
 			});
@@ -53,6 +54,7 @@ module.exports = {
 			return InternalServer('Error en el servidor');
 		}
 	},
+
 
 	async listOnlyOtherRoles() {
 		try {
@@ -77,6 +79,7 @@ module.exports = {
 			return InternalServer('Error en el servidor');
 		}
 	},
+
 
 	async reporte() {
 		try {

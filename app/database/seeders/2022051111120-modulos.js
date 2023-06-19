@@ -140,4 +140,13 @@ const modules = [
 		createdAt: new Date(),
 		updatedAt: new Date(),
 	},
+	{
+		name: 'Fecha de Entrega de Notas',
+		url: '/api/v1/delivery-qualification',
+		icon: 'IconBrandReact',
+		type: 'settings',
+		path_front: '/fecha-entrega-de-notas',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+	},
 ];

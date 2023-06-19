@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(
 	cors({
-		origin: process.env.HOST_FRONT || 'http://127.0.0.1:5174',
+		origin: process.env.HOST_FRONT,
 		credentials: true,
 	})
 );
@@ -39,12 +39,13 @@ app.get('/', (req, res) => {
 	res.render('index', {title: 'Página de inicio'});
 });
 
-
 // TODO: Route for api
 app.use('/api/v1', require('./app/routes/api/index'));
+
 app.get('*', (req, res) => {
-	res.sendFile(__dirname+'/public/index.html')
+	res.sendFile(__dirname + '/public/index.html');
 });
+
 app.listen(process.env.PORT, () => {
 	console.log(`Server is running on port http://localhost:${process.env.PORT}`);
 });

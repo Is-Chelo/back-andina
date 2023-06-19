@@ -37,7 +37,9 @@ const translates = {
 	user_username: 'Usuario',
 	academics_hours: 'Horas Académicas',
 	index: 'Nro',
-	total_coordinadores:'Total Coodinadores'
+	total_coordinadores: 'Total Coodinadores',
+	start_time: 'Fecha Inicial',
+	close_time: 'Fecha Final',
 };
 
 module.exports = {

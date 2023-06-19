@@ -6,7 +6,6 @@ const {kardexTransformReporte} = require('./utils/reports/kardex-transform-repor
 module.exports = {
 	async kardexByStudent(idStudent, idProgram, authUser) {
 		let whereProgram;
-
 		if (
 			idProgram === 'undefined' ||
 			idProgram === 'null' ||
