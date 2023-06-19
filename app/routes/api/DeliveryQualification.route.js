@@ -33,7 +33,7 @@ router.put(
 	DeliveryQualification.update
 );
 
-router.get('/active', [validarToken, validarPermisos], DeliveryQualification.active);
+router.get('/active', [validarToken ], DeliveryQualification.active);
 
 router.get('/:id', [validarToken, validarPermisos], DeliveryQualification.show);
 router.delete('/:id', [validarToken, validarPermisos], DeliveryQualification.delete);
