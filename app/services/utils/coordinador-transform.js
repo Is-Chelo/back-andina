@@ -18,6 +18,7 @@ const coordinadorTransform = (coordinadorWithRelations, index) => {
 		person_picture_image: coordinadorWithRelations?.person?.dataValues.picture_image,
 		person_username: coordinadorWithRelations?.person?.dataValues.username,
 		person_full_name: `${coordinadorWithRelations?.person?.dataValues.name} ${coordinadorWithRelations?.person?.dataValues.last_name}`,
+		active: coordinadorWithRelations.active,
 	};
 };
 module.exports = {

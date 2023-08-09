@@ -18,6 +18,7 @@ const studentTransform = (studentWithRelations, index) => {
 		person_picture_image: studentWithRelations?.person?.dataValues.picture_image,
 		person_username: studentWithRelations?.person?.dataValues.username,
 		person_full_name: `${studentWithRelations?.person?.dataValues.name} ${studentWithRelations?.person?.dataValues.last_name}`,
+		active: studentWithRelations.active,
 	};
 };
 module.exports = {
