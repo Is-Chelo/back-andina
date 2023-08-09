@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const {modulo, rolmodule} = require('../models/index');
+const {modulo, rolmodule, people, teacher_contracts, teacher} = require('../models/index');
 
 // * middleware para verificar el token introducido
-const validarToken = (req, res, next) => {
+const validarToken = async (req, res, next) => {
 	if (!req.headers.authorization) {
 		return res.status(401).json({
 			status: false,
@@ -13,6 +13,43 @@ const validarToken = (req, res, next) => {
 	try {
 		const token = req.headers.authorization.split(' ');
 		const userToken = jwt.verify(token[1], process.env.SECRET_KEY);
+		// validamos si user  esta activo
+		const userFind = await people.findOne({
+			where: {
+				id: userToken.id,
+			},
+		});
+		if (!userFind.active)
+			res.status(401).json({
+				status: false,
+				message: [
+					'El usuario se encuentra deshabilitado, por favor contactese con administración',
+				],
+			});
+
+		if (userToken.rol == 2) {
+			//*  DOCENTE VERIFICAMOS SI TIENE CONTRATO
+			const teacherFind = await teacher.findOne({
+				where: {
+					id_people: userToken.id,
+				},
+			});
+			const contractFind = await teacher_contracts.findOne({
+				where: {
+					teacher_id: teacherFind.id,
+					active: true,
+				},
+			});
+			if (contractFind === null) {
+				res.status(401).json({
+					status: false,
+					message: [
+						'El docente no cuenta con un contrato, aun no puede acceder al sistema.',
+					],
+				});
+			}
+		}
+
 		if (userToken) {
 			// * Guardamos el rol en la request
 			req.rol = userToken.rol;
@@ -22,7 +59,7 @@ const validarToken = (req, res, next) => {
 	} catch (e) {
 		res.status(401).json({
 			status: false,
-			message: ['Token no valido'],
+			message: ['Sesión no válida.'],
 		});
 		console.log(e);
 	}

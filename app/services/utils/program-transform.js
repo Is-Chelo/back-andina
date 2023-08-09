@@ -8,6 +8,7 @@ const programTransform = (program, index) => {
 		version: program.version,
 		// name_version: program.name + '   - versión: ' + program.version,
 		active: program.active,
+		resolution_number: program.resolution_number,
 		date_init: program.date_init,
 		date_end: program.date_end,
 		area_name: program?.area?.dataValues?.name,

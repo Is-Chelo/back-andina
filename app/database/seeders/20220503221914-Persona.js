@@ -16,6 +16,7 @@ module.exports = {
 				id_rol: 1,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Carlos',
@@ -27,10 +28,11 @@ module.exports = {
 				ci_number: '123',
 				ci_expedition: 'CH',
 				username: 'docente1',
-				password: await bcrypt.hash('76565432', 10),
+				password: await bcrypt.hash('12345678', 10),
 				id_rol: 2,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Marcelo',
@@ -42,10 +44,11 @@ module.exports = {
 				username: 'docente2',
 				ci_number: '122',
 				ci_expedition: 'LP',
-				password: await bcrypt.hash('77112939', 10),
+				password: await bcrypt.hash('12345678', 10),
 				id_rol: 2,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Juan',
@@ -57,10 +60,11 @@ module.exports = {
 				ci_number: '12233',
 				ci_expedition: 'CH',
 				username: 'docente3',
-				password: await bcrypt.hash('76565432', 10),
+				password: await bcrypt.hash('12345678', 10),
 				id_rol: 2,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Monica',
@@ -72,10 +76,11 @@ module.exports = {
 				username: 'docente4',
 				ci_number: '11221',
 				ci_expedition: 'CH',
-				password: await bcrypt.hash('88776654', 10),
+				password: await bcrypt.hash('12345678', 10),
 				id_rol: 2,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Maria Jose',
@@ -91,6 +96,7 @@ module.exports = {
 				id_rol: 3,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Coordinador 2',
@@ -106,6 +112,7 @@ module.exports = {
 				id_rol: 3,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Juan Carlos',
@@ -121,6 +128,7 @@ module.exports = {
 				id_rol: 3,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Juan Jose',
@@ -136,6 +144,7 @@ module.exports = {
 				id_rol: 4,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Carlos Marcelo',
@@ -151,6 +160,7 @@ module.exports = {
 				id_rol: 4,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Estudiante 3',
@@ -166,6 +176,7 @@ module.exports = {
 				id_rol: 4,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 			{
 				name: 'Luisa',
@@ -181,6 +192,7 @@ module.exports = {
 				id_rol: 4,
 				createdAt: new Date(),
 				updatedAt: new Date(),
+				active: true,
 			},
 		]);
 	},

@@ -149,4 +149,13 @@ const modules = [
 		createdAt: new Date(),
 		updatedAt: new Date(),
 	},
+	{
+		name: 'Contratos de Docentes',
+		url: '/api/v1/teacher-contract',
+		icon: 'IconBoxPadding',
+		type: 'settings',
+		path_front: '/contratos-docentes',
+		createdAt: new Date(),
+		updatedAt: new Date(),
+	},
 ];

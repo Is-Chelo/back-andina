@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
 				foreignKey: 'id_teacher',
 			});
 			// define association here
+			this.hasMany(models.teacher_contracts, {
+				foreignKey: 'teacher_id',
+			});
 		}
 	}
 	teacher.init(

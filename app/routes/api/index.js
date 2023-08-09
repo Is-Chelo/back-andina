@@ -21,5 +21,6 @@ router.use('/kardex', require('./Kardex.route'));
 router.use('/role', require('./Role.route'));
 router.use('/module', require('./Module.route'));
 router.use('/role-module', require('./RoleModule.route'));
+router.use('/teacher-contract', require('./TeacherContract.route'));
 
 module.exports = router;

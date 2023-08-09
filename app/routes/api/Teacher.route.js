@@ -9,6 +9,13 @@ const {validarToken, validarPermisos} = require('../../middlewares/auth');
 const TeacherControllerController = require('../../controllers/api/TeacherController');
 
 router.get('/', [validarToken, validarPermisos], TeacherControllerController.index);
+
+router.get(
+	'/teacher-with-contract',
+	[validarToken, validarPermisos],
+	TeacherControllerController.teacherWithContract
+);
+
 router.get('/reporte', [validarToken, validarPermisos], TeacherControllerController.reporteAll);
 
 router.post(

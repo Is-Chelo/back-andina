@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
 			password: DataTypes.STRING,
 			token_reset_clave: DataTypes.STRING,
 			id_rol: DataTypes.INTEGER,
+			active: DataTypes.BOOLEAN,
 		},
 		{
 			sequelize,

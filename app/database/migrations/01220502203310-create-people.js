@@ -45,6 +45,9 @@ module.exports = {
 			token_reset_clave: {
 				type: Sequelize.STRING,
 			},
+			active: {
+				type: Sequelize.BOOLEAN,
+			},
 			id_rol: {
 				type: Sequelize.INTEGER,
 				references: {

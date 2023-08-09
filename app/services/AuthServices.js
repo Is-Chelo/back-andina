@@ -1,4 +1,4 @@
-const {people, modulo, rolmodule, role} = require('../models/index');
+const {people, modulo, rolmodule, role, teacher, teacher_contracts} = require('../models/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {Op} = require('sequelize');
@@ -127,68 +127,118 @@ module.exports = {
 	},
 
 	async login(req, res) {
-		const {username, password} = req.body;
-		// TODO: verificar si el usuario existe
+		try {
+			const {username, password} = req.body;
+			// TODO: verificar si el usuario existe
+			const user = await this.findByUserNameOrEmail(username, username);
+			if (!user) return NotFoundResponse('Usuario no encontrado');
 
-		const user = await this.findByUserNameOrEmail(username, username);
-		if (!user) return NotFoundResponse('Usuario no encontrado');
+			// TODO sacamos el rol para ver si tiene un rol asignado
+			if (user.id_rol === null) {
+				return BadRequest('El usuario no tiene un rol Asignado');
+			}
 
-		// TODO sacamos el rol para ver si tiene un rol asignado
-		if (user.id_rol === null) {
-			return BadRequest('El usuario no tiene un rol Asignado');
-		}
-
-		const menu = await rolmodule.findAll({
-			where: {
-				id_rol: user.id_rol,
-			},
-			include: [
-				{
-					model: modulo,
+			// *: VERIFICAMOS SI ES DOCENTE Y SI TIENE UN CONTRATO
+			if (user.id_rol == 2) {
+				const teacherFind = await teacher.findOne({
 					where: {
-						url: {
-							[Op.not]: '/api/v1/role-module',
+						id_people: user.id,
+					},
+				});
+
+				const contractFind = await teacher_contracts.findOne({
+					where: {
+						teacher_id: teacherFind.id,
+						active: true,
+					},
+				});
+				if (contractFind === null) {
+					return {
+						status: false,
+						statusCode: 404,
+						message: [
+							'El docente no cuenta con un contrato en curso, no puede acceder al sistema.',
+						],
+					};
+				} else {
+					const dateNow = moment().format('YYYY-MM-DD');
+					const dateEnd = moment(contractFind.date_end).format('YYYY-MM-DD');
+					if (dateEnd < dateNow) {
+						await teacher_contracts.update(
+							{
+								active: false,
+							},
+							{
+								where: {
+									id: contractFind.id,
+								},
+							}
+						);
+						return {
+							status: false,
+							statusCode: 404,
+							message: [
+								'El contrato del docente ya culminó, no puede acceder al sistema',
+							],
+						};
+					}
+				}
+			}
+
+			const menu = await rolmodule.findAll({
+				where: {
+					id_rol: user.id_rol,
+				},
+				include: [
+					{
+						model: modulo,
+						where: {
+							url: {
+								[Op.not]: '/api/v1/role-module',
+							},
 						},
 					},
-				},
-			],
-		});
-		const dataTransform = Object.values(menu).map((data) => {
-			return menuTransform(data.dataValues);
-		});
-		// TODO comparar contraseñas
-		const compararClaves = await bcrypt.compare(password, user.password);
-		// TODO generar el jwt con los datos del usuario  si compararClaves es true
-		if (compararClaves) {
-			tokenUser = jwt.sign(
-				{
-					id: user.id,
-					name: user.name,
-					email: user.email,
-					rol: user.id_rol,
-				},
-				process.env.SECRET_KEY,
-				{
-					expiresIn: '4h',
-				}
-			);
-			return {
-				status: true,
-				statusCode: 200,
-				message: ['Login exitoso.'],
-				data: {
-					token: tokenUser,
-					id: user.id,
-					name: user.name,
-					email: user.email,
-					rol: user.id_rol,
-					menu: dataTransform,
-				},
-			};
-		} else {
-			return NotFoundResponse('La contraseña no coincide...');
+				],
+			});
+			const dataTransform = Object.values(menu).map((data) => {
+				return menuTransform(data.dataValues);
+			});
+			// TODO comparar contraseñas
+			const compararClaves = await bcrypt.compare(password, user.password);
+			// TODO generar el jwt con los datos del usuario  si compararClaves es true
+			if (compararClaves) {
+				tokenUser = jwt.sign(
+					{
+						id: user.id,
+						name: user.name,
+						email: user.email,
+						rol: user.id_rol,
+					},
+					process.env.SECRET_KEY,
+					{
+						expiresIn: '4h',
+					}
+				);
+				return {
+					status: true,
+					statusCode: 200,
+					message: ['Login exitoso.'],
+					data: {
+						token: tokenUser,
+						id: user.id,
+						name: user.name,
+						email: user.email,
+						rol: user.id_rol,
+						menu: dataTransform,
+					},
+				};
+			} else {
+				return NotFoundResponse('La contraseña no coincide...');
+			}
+		} catch (error) {
+			console.log(error);
+			return InternalServer('Error en el servidor');
 		}
-		// TODO devolvemos el json
 	},
 
 	async update(id, body) {

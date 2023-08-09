@@ -1,7 +1,7 @@
 const {Op} = require('sequelize');
 const {delivery_of_qualifications} = require('../models/index');
 const {InternalServer, NotFoundResponse, BadRequest} = require('../utils/response');
-const { deliveryGradesTransform } = require('./utils/reports/delivery-grades-transform-report');
+const {deliveryGradesTransform} = require('./utils/reports/delivery-grades-transform-report');
 
 module.exports = {
 	async create(body) {
@@ -82,6 +82,7 @@ module.exports = {
 			return InternalServer('Error en el servidor');
 		}
 	},
+
 	// * funcion para listar un item
 	async active() {
 		try {
@@ -92,7 +93,12 @@ module.exports = {
 			});
 
 			if (!response) {
-				return NotFoundResponse(`El registro con el id: ${id} no existe. `);
+				return {
+					statusCode: 200,
+					status: false,
+					message: ['No existe una fecha de registro de califcaciones.'],
+					data: [],
+				};
 			}
 
 			return {

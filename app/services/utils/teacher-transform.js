@@ -19,6 +19,7 @@ const teacherTransform = (teacherWithRelations, index) => {
 		person_picture_image: teacherWithRelations?.person?.dataValues.picture_image,
 		person_username: teacherWithRelations?.person?.dataValues.username,
 		person_full_name: `${teacherWithRelations?.person?.dataValues.name} ${teacherWithRelations?.person?.dataValues.last_name}`,
+		active: teacherWithRelations.active,
 	};
 };
 module.exports = {

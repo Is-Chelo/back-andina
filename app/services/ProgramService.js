@@ -104,7 +104,7 @@ module.exports = {
 		}
 	},
 	async reporte(userAuth) {
-		console.log(userAuth.rol);
+		// console.log(userAuth.rol);
 		try {
 			let whereCoordinador = {};
 			// ROL COODINADOR

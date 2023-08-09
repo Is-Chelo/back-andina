@@ -30,7 +30,7 @@ module.exports = {
 	},
 	async reporteAll(req, res) {
 		const userAuth = req.user;
-		console.log(userAuth);
+		// console.log(userAuth);
 		const response = await ProgramService.reporte(userAuth);
 		return pdfService.crearPdf(res, response.data, 'Datos de los Programas');
 	},

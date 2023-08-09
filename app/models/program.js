@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
 			id_area: DataTypes.INTEGER,
 			active: DataTypes.BOOLEAN,
 			sede: DataTypes.STRING,
+			resolution_number: DataTypes.STRING,
 		},
 		{
 			sequelize,

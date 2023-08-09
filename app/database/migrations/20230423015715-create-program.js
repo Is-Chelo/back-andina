@@ -36,6 +36,9 @@ module.exports = {
 			sede: {
 				type: Sequelize.STRING,
 			},
+			resolution_number: {
+				type: Sequelize.STRING,
+			},
 			active: {
 				type: Sequelize.BOOLEAN,
 				defaultValue: false,

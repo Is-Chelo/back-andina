@@ -32,4 +32,10 @@ module.exports = {
 		const response = await TeacherService.reporte(query);
 		return pdfService.crearPdf(res, response.data, 'Datos de los Docentes');
 	},
+
+	async teacherWithContract(req, res) {
+		const {query} = req;
+		const response = await TeacherService.teacherWithContract(query);
+		res.status(response.statusCode).json(response);
+	},
 };
