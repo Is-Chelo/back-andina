@@ -76,6 +76,7 @@ module.exports = {
 				ci_expedition: body.ci_expedition,
 				ci_number: body.ci_number,
 				password: claveNueva,
+				active: true,
 				id_rol: body.rol !== null || body.rol !== undefined ? body.rol : 1,
 				email,
 			});
