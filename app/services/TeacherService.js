@@ -223,6 +223,9 @@ module.exports = {
 			await teacher.destroy({
 				where: {id: id},
 			});
+			await teacher_contracts.destroy({
+				where: {teacher_id: id},
+			});
 
 			return {
 				statusCode: 200,
