@@ -18,8 +18,8 @@ router.post(
 		check('name', 'El nombre es requerido').trim().escape().not().isEmpty(),
 		check('date_init', 'La fecha de inicio es requerido.').trim().isDate(),
 		check('date_end', 'La fecha de finilización es requerido.').trim().isDate(),
-		check('id_area', 'El area tiene que ser un número.').isInt(),
-		check('id_area', 'El area es requerido.').trim().not().isEmpty(),
+		// check('id_area', 'El area tiene que ser un número.').isInt(),
+		// check('id_area', 'El area es requerido.').trim().not().isEmpty(),
 		validateFields,
 	],
 	ProgramControllerController.create
@@ -32,8 +32,8 @@ router.put(
 		check('name', 'El nombre es requerido').trim().escape().not().isEmpty(),
 		check('date_init', 'La fecha de inicio es requerido.').trim().isDate(),
 		check('date_end', 'La fecha de finilización es requerido.').trim().isDate(),
-		check('id_area', 'El area tiene que ser un número.').isInt(),
-		check('id_area', 'El area es requerido.').trim().not().isEmpty(),
+		// check('id_area', 'El area tiene que ser un número.').isInt(),
+		// check('id_area', 'El area es requerido.').trim().not().isEmpty(),
 		validateFields,
 	],
 	ProgramControllerController.update

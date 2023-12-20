@@ -468,7 +468,7 @@ module.exports = {
 			});
 			if (!response) return NotFoundResponse(`La caficicación con el id: ${id} no existe.`);
 
-			if (body.qualification >= 70) body.approved = true;
+			if (body.qualification >= 65) body.approved = true;
 			else body.approved = false;
 
 			body.average = body.qualification;

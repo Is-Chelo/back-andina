@@ -58,18 +58,18 @@ const modules = [
 		createdAt: new Date(),
 		updatedAt: new Date(),
 	},
-	{
-		name: 'Areas',
-		url: '/api/v1/area',
-		icon: 'IconBoxPadding',
-		type: 'settings',
-		path_front: '/areas',
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	},
+	// {
+	// 	name: 'Areas',
+	// 	url: '/api/v1/area',
+	// 	icon: 'IconBoxPadding',
+	// 	type: 'settings',
+	// 	path_front: '/areas',
+	// 	createdAt: new Date(),
+	// 	updatedAt: new Date(),
+	// },
 
 	{
-		name: 'Programas',
+		name: 'Cursos',
 		url: '/api/v1/program',
 		icon: 'IconFileCode2',
 		type: 'settings',
@@ -78,7 +78,7 @@ const modules = [
 		updatedAt: new Date(),
 	},
 	{
-		name: 'Asignaturas',
+		name: 'Modulos',
 		url: '/api/v1/subject',
 		icon: 'IconClipboardCheck',
 		type: 'settings',

@@ -16,8 +16,8 @@ const {studentTransform} = require('./utils/student-transform');
 module.exports = {
 	// * Creamos el programa
 	async create(body) {
-		const area = await areaServices.show(body.id_area);
-		if (!area.status) return area;
+		// const area = await areaServices.show(body.id_area);
+		// if (!area.status) return area;
 		try {
 			const response = await program.create(body);
 			return {
@@ -219,6 +219,8 @@ module.exports = {
 
 	// * funcion para actualizar los datos de un item
 	async update(id, body) {
+		// console.log(body);
+		delete body.id_area;
 		try {
 			const response = await program.findOne({
 				where: {
@@ -227,8 +229,8 @@ module.exports = {
 			});
 			if (!response) return NotFoundResponse(`Programa con el id: ${id} no existe.`);
 
-			const area = await areaServices.show(body.id_area);
-			if (!area.status) return area;
+			// const area = await areaServices.show(body.id_area);
+			// if (!area.status) return area;
 
 			await program.update(body, {
 				where: {
@@ -309,44 +311,31 @@ module.exports = {
 	async dashBoard() {
 		try {
 			let whereCoordinador = {};
-			// ROL COODINADOR
-			// if (userAuth.rol === 3) {
-			// 	const idCoodinador = await coordinador.findOne({
-			// 		where: {
-			// 			id_people: userAuth.id,
-			// 		},
-			// 	});
-			// 	if (idCoodinador) whereCoordinador = {id_coordinador: idCoodinador.id};
-			// }
-
 			let response;
-			// if (userAuth.rol !== 3) {
-			// 	response = await program.findAll({
-			// 		include: [{model: area}],
-			// 	});
-			// } else {
-			const areas = await area.findAll({
-				include: [
-					{
-						model: area_coordinador,
-						where: whereCoordinador,
-					},
-				],
-			});
-			const idsAreas = Object.values(areas).map((area) => area.id);
+
+			// const areas = await area.findAll({
+			// 	include: [
+			// 		{
+			// 			model: area_coordinador,
+			// 			where: whereCoordinador,
+			// 		},
+			// 	],
+			// });
+
+			// const idsAreas = Object.values(areas).map((area) => area.id);
+
 			response = await program.findAll({
-				include: [
-					{
-						model: area,
-						where: {
-							id: {
-								[Op.or]: idsAreas,
-							},
-						},
-					},
-				],
+				// include: [
+				// 	{
+				// 		model: area,
+				// 		where: {
+				// 			id: {
+				// 				[Op.or]: idsAreas,
+				// 			},
+				// 		},
+				// 	},
+				// ],
 			});
-			// }
 
 			const dataTransform = Object.values(response).map((data, index) => {
 				return programTransform(data.dataValues, index + 1);
